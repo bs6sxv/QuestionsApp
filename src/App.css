@@ -1,8 +1,35 @@
-.App {
+.game-app {
+  /* display: flex;
+  flex-direction: column;
+  background-color: #8393da;
   text-align: center;
+  margin: 128px auto;
+  border-radius: 10px;
+  padding-bottom: 32px;
+  align-items: center;
+  background-size: cover;
+  min-height: 400px; */
+
+  display: flex;
+  flex-direction: column;
+  width: 820px;
+  min-height: 400px;
+  background: #8393da;
+  text-align: center;
+  margin: 128px auto;
+  border-radius: 10px;
+  padding-bottom: 32px;
+  align-items: center;
+  
+  /* justify-content: center; */
 }
 
-.App-logo {
+.question-text {
+  width: 700px;
+}
+
+
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -35,4 +62,47 @@
   to {
     transform: rotate(360deg);
   }
+}  */
+
+body {
+  background-color: #14171b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.score-section {
+  /* display: flex;
+  font-size: 24px;
+  align-items: center; */
+  position: relative;
+  margin-top: 70px;
+
+}
+
+/* QUESTION/TIMER/LEFT SECTION */
+.question-section {
+
+  position: relative;
+}
+
+
+
+.question-count span {
+  font-size: 25px;
+}
+
+.question-text {
+  margin-bottom: 32px;
+}
+
+.timer-text {
+  background: rgb(230, 153, 12);
+  padding: 15px;
+  margin-top: 20px;
+  margin-right: 20px;
+  border: 5px solid rgb(255, 189, 67);
+  border-radius: 15px;
+  text-align: center;
 }
