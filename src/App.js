@@ -6,26 +6,42 @@ import Box from '@material-ui/core/Box';
 
 export default function App() {
   const [questions, setQuestions] = useState([]);
-  useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=10")
+  let api = "https://opentdb.com/api.php?amount="
+  let quesAmount = "10"
+
+  const apiFunc = () => {
+    quesAmount =  document.getElementById("text").value;
+    let url = api + quesAmount;
+    fetch(url)
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
         setQuestions(res.results);
       })
-      
+      setStartScreen(false);
       ;
-  }, []);
+  };
+
 
 
   const questionsArray = () => {
-        setQuestions(
-          questions.forEach((each)=> {each.incorrect_answers.push(each.correct_answer)})
-        );
+    setStartScreen(false);
+        // setQuestions([
+        //   questions.map(each => { 
+        //       return {
+        //         ...each,
+        //         incorrect_answers: each.incorrect_answers.push(each.correct_answer)
+        //       };
+        //   })
+        // ]);
+        
       }
+
 const [currentQuestion, setCurrentQuestion] = useState(0);
 
 const [showScore, setShowScore] = useState(false);
+
+const [startScreen, setStartScreen] = useState(true);
 
 const [score,setScore] = useState(0);
 
@@ -64,26 +80,36 @@ const decodeHTMLEntities = text => {
         <h2><Box m={1.5}><div>You scored {score} out of {questions.length}!</div></Box></h2>
         <h3><div>Play again? Refresh the Page!</div></h3>
         </div>
-			) : (
+			) : 
+      (
 				<>
-        
+        { startScreen ? (
+          <div>
+            <h1><Box m={5}><div>Ready to Play?</div></Box></h1>
+            <Box m={1.5}>Enter Number of Questions:</Box> <div className="questions-amount"><input id="text"></input></div>
+            <Button onClick={apiFunc} type="submit" variant="contained" color="primary">Start</Button>
+          </div>
+        ) : ( 
+          <>
 					<div className='question-section'>
 						<div className='question-count'>
 							<span>Question {currentQuestion + 1}</span>/{questions.length}
 						</div>
             <h2 className='question-text'> {decodeHTMLEntities(questions[currentQuestion]?.question)}</h2>
 						{/* <div className='question-text'>{questions[currentQuestion]?.question}</div> */}
-					</div>
+					</div> 
 					<div className='answer-section'>
-            {/* {questionsArray} */}
-            {/* {questions.forEach((each)=> {each.incorrect_answers.push(each.correct_answer)})} */}
 						{questions[currentQuestion]?.incorrect_answers.map((answerOptions)=>
             // <button onClick={handleWrongAnswerButtonClick}>{answerOptions}</button>)
             <Box m={1.5}><div className="choices"><Button m={2} onClick={handleWrongAnswerButtonClick} variant="contained" color="primary" >{decodeHTMLEntities(answerOptions)}</Button></div></Box>)}
             <Button onClick={handleRightAnswerButtonClick}variant="contained" color="primary">{decodeHTMLEntities(questions[currentQuestion]?.correct_answer)}</Button>
-					</div>
+					</div> 
+          <div className='question-correct'><b>Correct: {score}</b> </div>
+          </>
+          )} 
+          
 				</>
-			)} 
+			)}
     </div>
   );
 }
